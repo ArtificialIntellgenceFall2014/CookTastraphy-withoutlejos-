@@ -105,6 +105,12 @@ public class Restaurant extends Thread{
 		}
 	}
 	
+	//All of this is for the GUI
+	//Also there should be an array for
+	//	Items waiting to be cooked (OrderedItems[])
+	//	Items being cooked (OrderedItems[])
+	//	Items that are ready (OrderedItems[])
+	// 	Ingredients being shipped (Ingredient[])
 	public Customer[] getWaitingCustomers()
 	{
 		return cg.getWaitingCustomers();
