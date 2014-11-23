@@ -2,10 +2,10 @@ package restaurant;
 
 public class Customer {
 	static int nextID;
-	int customerID;
+	public int customerID;
 	String customerName;
 	public long timeToAppear;
-	OrderedItem expectedItem;
+	public OrderedItem expectedItem;
 	
 	public Customer(String name, FoodItem orderedItem, long timeToArrive)
 	{

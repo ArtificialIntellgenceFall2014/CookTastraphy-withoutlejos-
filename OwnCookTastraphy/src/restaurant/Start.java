@@ -1,18 +1,23 @@
 package restaurant;
-
+import graphics.*;
 import threads.Restaurant;
+
+
 
 public class Start {
 	static Restaurant rest;
+	public static GameBoard board;
 	public static void main(String[] args) {
 		//Restaurant(tables, sizeOfWaitingList)
 		rest = new Restaurant(8, 6);
 		rest.start();
+		board = new GameBoard();
 		boolean isRunning = true;
 		printMenu();
 		while(isRunning)
 		{
 			printAll();
+			updateBoard();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -97,6 +102,33 @@ public class Start {
 					+ "\tAmount: " + toPrint[i].amount
 					+ "\tTimeToOrder: " + toPrint[i].timeToOrderMore
 					+ "\tAmountInOrder: " + toPrint[i].amountInOrder);
+		}
+	}
+	
+	static void updateBoard(){
+		board.removeAll();
+		Customer[] seatedCustomers = rest.getSeatedCustomers();
+		for(int i = 0; i < seatedCustomers.length; i++)
+		{
+			if(seatedCustomers[i] != null)
+			{
+				board.addNewOrder(seatedCustomers[i].expectedItem.orderedItem.name, seatedCustomers[i].customerID);
+			}
+		}
+		Customer[] waitingCustomers = rest.getWaitingCustomers();
+		for(int i = 0; i < waitingCustomers.length; i++)
+		{
+			if(waitingCustomers[i] != null)
+			{
+				board.addToWaiting(waitingCustomers[i].expectedItem.orderedItem.name, waitingCustomers[i].customerID);
+			}
+		}
+		Ingredient[] pantry = rest.getPantry();
+		for(int i = 0; i < pantry.length; i++)
+		{
+			if(pantry[i] != null){
+				board.addPantry(pantry[i].ingredientName, pantry[i].amount);
+			}
 		}
 	}
 }

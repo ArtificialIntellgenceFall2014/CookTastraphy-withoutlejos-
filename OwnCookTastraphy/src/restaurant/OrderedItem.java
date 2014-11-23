@@ -1,7 +1,7 @@
 package restaurant;
 
 public class OrderedItem{
-	FoodItem orderedItem;
+	public FoodItem orderedItem;
 	int customerID;
 	long timeOrdered;
 	long timeDeadline;

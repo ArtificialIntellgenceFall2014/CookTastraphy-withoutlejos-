@@ -31,6 +31,7 @@ public class Restaurant extends Thread{
 	
 	public void run()
 	{
+		
 		cg.start();
 		try{
 			while(isRunning)
@@ -38,7 +39,7 @@ public class Restaurant extends Thread{
 				int openSpot = getOpenTable();
 				System.out.println("");
 				if(openSpot != -1)
-				{
+				{   
 					seatedCustomers[openSpot] = cg.getCustomer();
 				}
 				Thread.sleep(500);
@@ -111,6 +112,7 @@ public class Restaurant extends Thread{
 	//	Items being cooked (OrderedItems[])
 	//	Items that are ready (OrderedItems[])
 	// 	Ingredients being shipped (Ingredient[])
+	
 	public Customer[] getWaitingCustomers()
 	{
 		return cg.getWaitingCustomers();
