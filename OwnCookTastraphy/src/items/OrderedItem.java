@@ -3,14 +3,18 @@ package items;
 public class OrderedItem{
 	public FoodItem orderedItem;
 	public int customerID;
-	long timeOrdered;
-	long timeDeadline;
+	public long timeOrdered;
+	public long timeReady;
 	
 	OrderedItem(FoodItem item, int customerID)
 	{
 		orderedItem = item;
 		this.customerID = customerID;
+	}
+	
+	public void startItem()
+	{
 		timeOrdered = System.currentTimeMillis();
-		timeDeadline = timeOrdered + orderedItem.prepTime;
+		timeReady = timeOrdered + orderedItem.prepTime;
 	}
 }

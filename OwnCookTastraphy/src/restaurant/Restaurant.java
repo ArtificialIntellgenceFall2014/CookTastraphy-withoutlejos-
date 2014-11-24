@@ -9,6 +9,7 @@ import items.UsedIngredient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Restaurant extends Thread{
@@ -19,6 +20,7 @@ public class Restaurant extends Thread{
 	int tables;
 	FoodItem[] menuBillboard;
 	private Customer[] seatedCustomers;
+	//Complete orders will be taken out
 	Kitchen mainKitchen;
 	
 	public Restaurant(int tables, int maxWait, int chefStrat, int supStrat)
@@ -45,6 +47,16 @@ public class Restaurant extends Thread{
 					mainKitchen.gusteau.PendingOrders.add(seatedCustomers[openSpot].expectedItem);
 				}
 			}
+			if(mainKitchen.gusteau.CompleteOrders.size() > 0)
+			{
+				deliverFood();
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		System.out.println("ExitingThread");
 	}
@@ -56,6 +68,25 @@ public class Restaurant extends Thread{
 			t = new Thread(this);
 			t.start();
 		}
+	}
+	
+	public int deliverFood()
+	{
+		for(int i = 0; i < seatedCustomers.length; i++)
+		{
+			if(seatedCustomers[i] == null)
+			{
+				continue;
+			}
+			
+			if(mainKitchen.gusteau.CompleteOrders.get(0).customerID == seatedCustomers[i].customerID)
+			{
+				seatedCustomers[i] = null;
+				mainKitchen.gusteau.CompleteOrders.remove(0);
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	int getOpenTable()
@@ -142,6 +173,11 @@ public class Restaurant extends Thread{
 	public OrderedItem[] getCompleteOrders()
 	{
 		return mainKitchen.getCompleteOrders();
+	}
+	
+	public Ingredient[] getOrderedIngredients()
+	{
+		return mainKitchen.getOrderedIngredients();
 	}
 	
 	public void closeProgram()

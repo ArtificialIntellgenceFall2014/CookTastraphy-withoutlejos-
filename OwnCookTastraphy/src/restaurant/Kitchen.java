@@ -100,4 +100,9 @@ public class Kitchen extends Thread{
 		ret = gusteau.CompleteOrders.toArray(ret);
 		return ret;
 	}
+	
+	public Ingredient[] getOrderedIngredients()
+	{
+		return amy.getOrderedIngredients();
+	}
 }

@@ -2,6 +2,7 @@ package restaurant;
 
 import items.Ingredient;
 import items.OrderedItem;
+import items.UsedIngredient;
 
 import java.util.ArrayList;
 
@@ -33,9 +34,20 @@ public class Chef extends Thread{
 	{
 		while(isRunning)
 		{
-			if(Pantry[0].amount > 0)
+			switch(strategy)
 			{
-				Pantry[0].amount--;
+				case 0:
+					//on strike!
+					break;
+				case 1:
+					Strategy1();
+					break;
+				case 2:
+					Strategy2();
+					break;
+				case 3:
+					Strategy3();
+					break;
 			}
 			try {
 				Thread.sleep(1000);
@@ -57,7 +69,26 @@ public class Chef extends Thread{
 	
 	public void Strategy1()
 	{
-		
+		for(int i = 0; i < PendingOrders.size(); i++)
+		{
+			if(hasIngredients(PendingOrders.get(i)))
+			{
+				startPendingOrder(i);
+			}
+		}
+		long currTime = System.currentTimeMillis();
+		for(int i = 0; i < InProgress.length; i++)
+		{
+			if(InProgress[i] ==  null)
+			{
+				continue;
+			}
+			if(currTime > InProgress[i].timeReady)
+			{
+				CompleteOrders.add(InProgress[i]);
+				InProgress[i] = null;
+			}
+		}
 	}
 	
 	public void Strategy2()
@@ -69,5 +100,57 @@ public class Chef extends Thread{
 	{
 		
 	}
+	
+	public void startPendingOrder(int index)
+	{
+		for(int i = 0; i < InProgress.length; i++)
+		{
+			if(InProgress[i] == null)
+			{
+				InProgress[i] = PendingOrders.remove(index);
+				InProgress[i].startItem();
+				takeIngredients(InProgress[i]);
+				return;
+			}
+		}
+	
+	}
 
+	public void takeIngredients(OrderedItem order)
+	{
+		for(int i = 0; i < order.orderedItem.ingredients.length; i++)
+		{
+			for(int j = 0; j < Pantry.length; j++)
+			{
+				if(Pantry[j].ingredientName.equals(order.orderedItem.ingredients[i].ingredientName))
+				{
+					Pantry[j].amount -= order.orderedItem.ingredients[i].amount;	
+				}
+			}
+		}
+	}
+	
+	public boolean hasIngredients(OrderedItem order)
+	{
+		for(int i = 0; i < order.orderedItem.ingredients.length; i++)
+		{
+			if(!hasEnoughIngredient(order.orderedItem.ingredients[i]))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean hasEnoughIngredient(UsedIngredient ing)
+	{
+		for(int i = 0; i < Pantry.length; i++)
+		{
+			if(ing.ingredientName.equals(Pantry[i].ingredientName))
+			{
+				return ing.amount <= Pantry[i].amount;
+			}
+		}
+		return false;
+	}
 }

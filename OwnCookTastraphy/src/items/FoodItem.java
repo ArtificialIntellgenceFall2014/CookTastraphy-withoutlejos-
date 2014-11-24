@@ -7,6 +7,7 @@ public class FoodItem {
 	long prepTime;
 	//[IngredientID] [Amount]
 	public UsedIngredient[] ingredients;
+	public int orderAmount = 0;
 	
 	public FoodItem(String name, long prepTime, UsedIngredient[] ingredients)
 	{

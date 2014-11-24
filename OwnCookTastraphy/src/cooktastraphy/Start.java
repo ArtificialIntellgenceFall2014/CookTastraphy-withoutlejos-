@@ -29,7 +29,7 @@ public class Start {
 		board = new GameBoard();
 		boolean isRunning = true;
 		printMenu();
-		long timeToEnd = System.currentTimeMillis() + 30000;
+		long timeToEnd = System.currentTimeMillis() + 90000;
 		while(isRunning)
 		{
 			printAll();
@@ -45,12 +45,16 @@ public class Start {
 				rest.closeProgram();
 			}
 		}
+		System.exit(0);
 	}
 
 	static void printAll()
 	{
 		System.out.print("\n\n\n\n");
 //		printMenu();
+		System.out.print("Ordered Ingredients\n");
+		printOrderedIngredients();
+		System.out.print("Pantry\n");
 		printPantry();
 		printWaitingCustomers();
 		printTables();
@@ -60,6 +64,31 @@ public class Start {
 		printInProgress();
 		System.out.print("Complete\n");
 		printCompleteOrders();
+	}
+	
+	static void printOrderedIngredients()
+	{
+		Ingredient[] toPrint = rest.getOrderedIngredients();
+		for(int i = 0; i < toPrint.length; i++)
+		{
+			if(toPrint[i] == null)
+			{
+				System.out.println("\t[No Ing Order]");
+			}
+//			else if(!toPrint[i].ingredientName.equals("tomato"))
+//			{
+//				continue;
+//			}
+			else
+			{
+				System.out.println("\tOrder of " 
+						+ toPrint[i].amountInOrder + " "
+						+ toPrint[i].ingredientName
+						+ " will arrive in "
+						+ ((toPrint[i].arrivalTime - System.currentTimeMillis())/1000)
+						+ " seconds");
+			}
+		}
 	}
 	
 	static void printPendingOrders()
@@ -95,7 +124,9 @@ public class Start {
 				System.out.println("\tOrder " + toPrint[i].orderedItem.name
 						+ " from customer "
 						+ toPrint[i].customerID
-						+ " is in progress");
+						+ " will be complete in "
+						+ ((toPrint[i].timeReady - System.currentTimeMillis()))/1000
+						+ " seconds");
 			}
 		}
 	}
