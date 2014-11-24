@@ -1,14 +1,15 @@
-package threads;
+package restaurant;
+
+import generators.CustomerGenerator;
+import items.Customer;
+import items.FoodItem;
+import items.Ingredient;
+import items.OrderedItem;
+import items.UsedIngredient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import restaurant.Customer;
-import restaurant.FoodItem;
-import restaurant.Ingredient;
-import restaurant.Kitchen;
-import restaurant.UsedIngredient;
 
 public class Restaurant extends Thread{
 	Thread t;
@@ -20,34 +21,30 @@ public class Restaurant extends Thread{
 	private Customer[] seatedCustomers;
 	Kitchen mainKitchen;
 	
-	public Restaurant(int tables, int maxWait)
+	public Restaurant(int tables, int maxWait, int chefStrat, int supStrat)
 	{
 		this.tables = tables;
 		loadMenu();
 		cg = new CustomerGenerator(maxWait, menuBillboard);
 		seatedCustomers = new Customer[tables];
-		mainKitchen = new Kitchen();
+		mainKitchen = new Kitchen(4, menuBillboard, chefStrat, supStrat);
 	}
 	
 	public void run()
 	{
-		
 		cg.start();
-		try{
-			while(isRunning)
-			{
-				int openSpot = getOpenTable();
-				System.out.println("");
-				if(openSpot != -1)
-				{   
-					seatedCustomers[openSpot] = cg.getCustomer();
-				}
-				Thread.sleep(500);
-			}
-		}
-		catch(InterruptedException e)
+		mainKitchen.start();
+		while(isRunning)
 		{
-			System.out.println("Interrupted");
+			int openSpot = getOpenTable();
+			if(openSpot != -1)
+			{
+				seatedCustomers[openSpot] = cg.getCustomer();
+				if(seatedCustomers[openSpot] != null)
+				{
+					mainKitchen.gusteau.PendingOrders.add(seatedCustomers[openSpot].expectedItem);
+				}
+			}
 		}
 		System.out.println("ExitingThread");
 	}
@@ -108,11 +105,10 @@ public class Restaurant extends Thread{
 	
 	//All of this is for the GUI
 	//Also there should be an array for
-	//	Items waiting to be cooked (OrderedItems[])
-	//	Items being cooked (OrderedItems[])
-	//	Items that are ready (OrderedItems[])
+	//	Items waiting to be cooked (OrderedItem[])
+	//	Items being cooked (OrderedItem[])
+	//	Items that are ready (OrderedItem[])
 	// 	Ingredients being shipped (Ingredient[])
-	
 	public Customer[] getWaitingCustomers()
 	{
 		return cg.getWaitingCustomers();
@@ -131,5 +127,29 @@ public class Restaurant extends Thread{
 	public Ingredient[] getPantry()
 	{
 		return mainKitchen.getPantry();
+	}
+	
+	public OrderedItem[] getPendingOrders()
+	{
+		return mainKitchen.getPendingOrders();
+	}
+	
+	public OrderedItem[] getInProgress()
+	{
+		return mainKitchen.getInProgress();
+	}
+	
+	public OrderedItem[] getCompleteOrders()
+	{
+		return mainKitchen.getCompleteOrders();
+	}
+	
+	public void closeProgram()
+	{
+		cg.isRunning = false;
+		mainKitchen.gusteau.isRunning = false;
+		mainKitchen.amy.isRunning = false;
+		mainKitchen.isRunning = false;
+		isRunning = false;
 	}
 }

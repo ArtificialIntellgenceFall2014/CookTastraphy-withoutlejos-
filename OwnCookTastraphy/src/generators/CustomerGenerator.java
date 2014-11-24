@@ -1,12 +1,12 @@
-package threads;
+package generators;
+
+import items.Customer;
+import items.FoodItem;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import restaurant.Customer;
-import restaurant.FoodItem;
 
 public class CustomerGenerator extends Thread{
 	private Thread t;
@@ -14,7 +14,7 @@ public class CustomerGenerator extends Thread{
 	int maxEnter;
 	ArrayList<Customer> waitingCustomers = new ArrayList<Customer>();
 	ArrayList<Customer> customersToAppear = new ArrayList<Customer>();
-	CustomerGenerator(int maxEnter, FoodItem[] menu)
+	public CustomerGenerator(int maxEnter, FoodItem[] menu)
 	{
 		this.maxEnter = maxEnter;
 		System.out.println("CustomerGenerator is alive");

@@ -1,8 +1,8 @@
-package restaurant;
+package items;
 
 public class UsedIngredient {
-	String ingredientName;
-	int amount;
+	public String ingredientName;
+	public int amount;
 	public UsedIngredient(String name, int amount)
 	{
 		ingredientName = name;

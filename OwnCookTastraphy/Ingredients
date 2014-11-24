@@ -1,12 +1,12 @@
 8
-tomato 10 10 20
-lettuce 10 10 20
-pickle 10 20 20
-cheese 10 10 20
-onion 2000 10 20
-shrek 1 30 1
-meat 11 20 5
-ketchup 12 10 200
+tomato 10 10000 20
+lettuce 10 10000 20
+pickle 10 10000 20
+cheese 10 10000 20
+onion 2000 10000 20
+shrek 1 1000 1
+meat 11 10000 5
+ketchup 12 10000 200
 
 Explanation
 numberofingredients (name amountInPantry timeToOrder howManyComeWithOrder)

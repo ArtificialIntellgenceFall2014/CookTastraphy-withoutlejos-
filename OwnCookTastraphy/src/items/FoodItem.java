@@ -1,4 +1,4 @@
-package restaurant;
+package items;
 
 public class FoodItem {
 	//Display Name
@@ -6,7 +6,7 @@ public class FoodItem {
 	//In Milliseconds
 	long prepTime;
 	//[IngredientID] [Amount]
-	UsedIngredient[] ingredients;
+	public UsedIngredient[] ingredients;
 	
 	public FoodItem(String name, long prepTime, UsedIngredient[] ingredients)
 	{

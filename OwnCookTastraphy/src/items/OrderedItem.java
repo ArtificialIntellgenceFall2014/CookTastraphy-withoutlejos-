@@ -1,8 +1,8 @@
-package restaurant;
+package items;
 
 public class OrderedItem{
 	public FoodItem orderedItem;
-	int customerID;
+	public int customerID;
 	long timeOrdered;
 	long timeDeadline;
 	

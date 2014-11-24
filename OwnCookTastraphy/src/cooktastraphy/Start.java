@@ -1,6 +1,13 @@
-package restaurant;
+package cooktastraphy;
+import items.Customer;
+import items.FoodItem;
+import items.Ingredient;
+import items.OrderedItem;
+
+import java.util.Scanner;
+
+import restaurant.Restaurant;
 import graphics.*;
-import threads.Restaurant;
 
 
 
@@ -9,11 +16,20 @@ public class Start {
 	public static GameBoard board;
 	public static void main(String[] args) {
 		//Restaurant(tables, sizeOfWaitingList)
-		rest = new Restaurant(8, 6);
+		Scanner input = new Scanner(System.in);
+		System.out.println("What strategy will the chef use?");
+		int chefStrat = input.nextInt();
+		System.out.println("What strategy will the supply clerk use?");
+		int supStrat = input.nextInt();
+		input.close();
+		
+		
+		rest = new Restaurant(8, 6, chefStrat, supStrat);
 		rest.start();
 		board = new GameBoard();
 		boolean isRunning = true;
 		printMenu();
+		long timeToEnd = System.currentTimeMillis() + 30000;
 		while(isRunning)
 		{
 			printAll();
@@ -22,6 +38,11 @@ public class Start {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			}
+			if(System.currentTimeMillis() > timeToEnd)
+			{
+				isRunning = false;
+				rest.closeProgram();
 			}
 		}
 	}
@@ -33,6 +54,69 @@ public class Start {
 		printPantry();
 		printWaitingCustomers();
 		printTables();
+		System.out.print("Pending\n");
+		printPendingOrders();
+		System.out.print("InProgress\n");
+		printInProgress();
+		System.out.print("Complete\n");
+		printCompleteOrders();
+	}
+	
+	static void printPendingOrders()
+	{
+		OrderedItem[] toPrint = rest.getPendingOrders();
+		for(int i = 0; i < toPrint.length; i++)
+		{
+			if(toPrint[i] == null)
+			{
+				System.out.println("\t[No Order]");
+			}
+			else
+			{
+				System.out.println("\tOrder " + toPrint[i].orderedItem.name
+						+ " from customer "
+						+ toPrint[i].customerID
+						+ " is pending");
+			}
+		}
+	}
+	
+	static void printInProgress()
+	{
+		OrderedItem[] toPrint = rest.getInProgress();
+		for(int i = 0; i < toPrint.length; i++)
+		{
+			if(toPrint[i] == null)
+			{
+				System.out.println("\t[No Order]");
+			}
+			else
+			{
+				System.out.println("\tOrder " + toPrint[i].orderedItem.name
+						+ " from customer "
+						+ toPrint[i].customerID
+						+ " is in progress");
+			}
+		}
+	}
+	
+	static void printCompleteOrders()
+	{
+		OrderedItem[] toPrint = rest.getCompleteOrders();
+		for(int i = 0; i < toPrint.length; i++)
+		{
+			if(toPrint[i] == null)
+			{
+				System.out.println("\t[No Order]");
+			}
+			else
+			{
+				System.out.println("\tOrder " + toPrint[i].orderedItem.name
+						+ " from customer "
+						+ toPrint[i].customerID
+						+ " is complete");
+			}
+		}
 	}
 	
 	static void printWaitingCustomers()
@@ -42,7 +126,7 @@ public class Start {
 		{
 			if(toPrint[i] == null)
 			{
-				System.out.println("No one is waiting");
+				System.out.println("[No one waiting]");
 			}
 			else
 			{

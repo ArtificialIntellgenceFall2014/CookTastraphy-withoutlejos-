@@ -1,30 +1,54 @@
 package restaurant;
 
+import items.FoodItem;
+import items.Ingredient;
+import items.OrderedItem;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import threads.Chef;
-
-public class Kitchen {
-	//Customers drop orders directly into here
-	public ArrayList<OrderedItem> PendingOrders = new ArrayList<OrderedItem>();
-	//Only four ovens
-	public OrderedItem[] InProgress = new OrderedItem[4];
-	//Complete orders will be taken out
-	public ArrayList<OrderedItem> CompleteOrders = new ArrayList<OrderedItem>();
+public class Kitchen extends Thread{
+	private Thread t;
+	public boolean isRunning = true;
+//	//Customers drop orders directly into here
+//	public ArrayList<OrderedItem> PendingOrders = new ArrayList<OrderedItem>();
+//	//Complete orders will be taken out
+//	public ArrayList<OrderedItem> CompleteOrders = new ArrayList<OrderedItem>();
 	//Pantry
 	public Ingredient[] Pantry;
 	
 	//The cook
+	//Okay seriously don't name classes after real people
+	//Not very intuitive but I thought it seemed nice lol
 	public Chef gusteau;
+	public SupplyClerk amy;
 	
-	public Kitchen()
+	public Kitchen(int ovens, FoodItem[] menu, int chefStrat, int suppStrat)
 	{
 		loadPantry();
-		gusteau = new Chef();
+		gusteau = new Chef(ovens, Pantry, chefStrat);
+		amy = new SupplyClerk(Pantry, menu, suppStrat);
+	}
+	
+	public void run()
+	{
 		gusteau.start();
+		amy.start();
+		while(isRunning)
+		{
+			
+			//Pantry = clerk.order
+		}
+	}
+	
+	public void start()
+	{
+		if(t == null)
+		{
+			t = new Thread(this);
+			t.start();
+		}
 	}
 	
 	public void loadPantry()
@@ -49,7 +73,6 @@ public class Kitchen {
 				stringParse.close();
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -57,5 +80,24 @@ public class Kitchen {
 	public Ingredient[] getPantry()
 	{
 		return Pantry;
+	}
+	
+	public OrderedItem[] getPendingOrders()
+	{
+		OrderedItem[] ret = new OrderedItem[4];
+		ret = gusteau.PendingOrders.toArray(ret);
+		return ret;
+	}
+	
+	public OrderedItem[] getInProgress()
+	{
+		return gusteau.InProgress;
+	}
+	
+	public OrderedItem[] getCompleteOrders()
+	{
+		OrderedItem[] ret = new OrderedItem[4];
+		ret = gusteau.CompleteOrders.toArray(ret);
+		return ret;
 	}
 }

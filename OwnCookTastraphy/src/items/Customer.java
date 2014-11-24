@@ -1,9 +1,9 @@
-package restaurant;
+package items;
 
 public class Customer {
 	static int nextID;
 	public int customerID;
-	String customerName;
+	public String customerName;
 	public long timeToAppear;
 	public OrderedItem expectedItem;
 	
@@ -14,10 +14,5 @@ public class Customer {
 		customerName = name;
 		expectedItem = new OrderedItem(orderedItem, customerID);
 		this.timeToAppear = timeToArrive;
-	}
-	
-	void orderFood(FoodItem order)
-	{
-		expectedItem = new OrderedItem(order, customerID);
 	}
 }
