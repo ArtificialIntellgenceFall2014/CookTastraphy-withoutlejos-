@@ -33,6 +33,7 @@ public class Start {
 		while(isRunning)
 		{
 			printAll();
+			System.out.println("Time Left: " + (timeToEnd - System.currentTimeMillis())/1000 + " seconds");
 			updateBoard();
 			try {
 				Thread.sleep(1000);
