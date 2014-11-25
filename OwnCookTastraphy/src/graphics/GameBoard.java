@@ -1,6 +1,5 @@
 package graphics;
 import java.awt.*;
-import java.util.*;
 import javax.swing.*;
 
 public class GameBoard extends JPanel {

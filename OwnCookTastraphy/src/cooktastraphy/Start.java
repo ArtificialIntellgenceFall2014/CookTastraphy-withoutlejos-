@@ -271,5 +271,13 @@ public class Start {
 				board.addDoneOrder(forRunner[i].orderedItem.name, forRunner[i].customerID);
 			}
 		}
+		OrderedItem[] allItems = rest.getCompletedItems();
+		for(int i = 0; i < allItems.length; i++)
+		{
+			if(allItems[i] != null)
+			{
+				board.addToOrderHistory(allItems[i].orderedItem.name);
+			}
+		}
 	}
 }
