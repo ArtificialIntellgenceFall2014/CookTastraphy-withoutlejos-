@@ -27,6 +27,10 @@ public class Start {
 		rest = new Restaurant(8, 6, chefStrat, supStrat);
 		rest.start();
 		board = new GameBoard();
+		FoodItem[] allItems = rest.getMenu();
+		for(int i=0; i < allItems.length; i++){
+			board.addToMenu(allItems[i].name);
+		}
 		boolean isRunning = true;
 		printMenu();
 		long timeToEnd = System.currentTimeMillis() + 90000;

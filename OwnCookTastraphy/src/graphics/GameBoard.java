@@ -12,14 +12,12 @@ public class GameBoard extends JPanel {
 	public JPanel right = new JPanel(new FlowLayout());
 	public JPanel runner = new JPanel(new FlowLayout());
 	public JPanel chef = new JPanel(new FlowLayout());
-	//There is now a function in restaurant that returns all completed ordered items
-	//rest.getCompletedItems(); //Extremely lazy naming but w/e w/e
-	//Returns OrderedItem[]
 	public JPanel orderHistoryPanel = new JPanel(new FlowLayout());
+	public JPanel menuPanel = new JPanel(new FlowLayout());
 	
 	public GameBoard(){
 		JPanel p = new JPanel(new BorderLayout());
-		JLabel header = new JLabel("CookTastrophy is running", JLabel.CENTER);
+		JLabel header = new JLabel("CookTastrophy!", JLabel.LEFT);
 		p.add(header, BorderLayout.PAGE_START);
 		JLabel footer = new JLabel("  ");
 		p.add(footer, BorderLayout.PAGE_END);
@@ -70,7 +68,14 @@ public class GameBoard extends JPanel {
 		JLabel orderHistLabel = new JLabel("All Past Orders: ", JLabel.CENTER);
 		orderHistLabel.setForeground(Color.YELLOW);
 		right.add(orderHistLabel);
-		right.add(orderHistoryPanel);
+		right.add(orderHistoryPanel);;
+		
+		menuPanel.setPreferredSize(new Dimension(200, 200));
+		menuPanel.setBackground(Color.black);
+		JLabel menuHeader = new JLabel("The Menu", JLabel.CENTER);
+		menuHeader.setForeground(Color.YELLOW);
+		right.add(menuHeader);
+		right.add(menuPanel);
 		p.add(right, BorderLayout.LINE_END);
 		
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +95,8 @@ public class GameBoard extends JPanel {
 			chef.revalidate();
 			runner.removeAll();
 			runner.revalidate();
-			
+			orderHistoryPanel.removeAll();
+			orderHistoryPanel.revalidate();
 			frame.repaint();
 	}
 	
@@ -100,7 +106,7 @@ public class GameBoard extends JPanel {
 		addingSomething.setForeground(Color.WHITE);
 		orders.add(addingSomething);
 		orders.revalidate();
-		order.repaint();
+		orders.repaint();
 	}
 	
 	public void addToWaiting(String order, int custNumber){
@@ -141,11 +147,19 @@ public class GameBoard extends JPanel {
 	
 	public void addToOrderHistory(String theOrder){
 		JLabel addingSomething = new JLabel(theOrder + "; ");
-		addingSomething.setPreferredSize(new Dimension(190,20));
 		addingSomething.setForeground(Color.WHITE);
 		orderHistoryPanel.add(addingSomething);
 		orderHistoryPanel.revalidate();
 		orderHistoryPanel.repaint();
+	}
+	
+	public void addToMenu(String menuItem){
+		JLabel addingSomething = new JLabel(menuItem);
+		addingSomething.setForeground(Color.WHITE);
+		addingSomething.setPreferredSize(new Dimension(190,20));
+		menuPanel.add(addingSomething);
+		menuPanel.revalidate();
+		menuPanel.repaint();
 	}
 
 }
