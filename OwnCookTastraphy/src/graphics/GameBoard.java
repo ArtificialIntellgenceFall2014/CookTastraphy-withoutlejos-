@@ -69,20 +69,27 @@ public class GameBoard extends JPanel {
 	    frame.setVisible(true);
 	}
 	
+	public void removeAll(){
+			orders.removeAll();
+			orders.revalidate();
+			waitingOrders.removeAll();
+			waitingOrders.revalidate();
+			pantry.removeAll();
+			pantry.revalidate();
+			chef.removeAll();
+			chef.revalidate();
+			runner.removeAll();
+			runner.revalidate();
+			
+			frame.repaint();
+	}
+	
 	public void addNewOrder(String order, int custNumber){
 		JLabel addingSomething = new JLabel(custNumber + " " + order, JLabel.LEFT);
 		addingSomething.setPreferredSize(new Dimension(190,20));
 		addingSomething.setForeground(Color.WHITE);
 		orders.add(addingSomething);
 		orders.revalidate();
-	}
-	
-	public void removeAll(){
-		orders.removeAll();
-		waitingOrders.removeAll();
-		pantry.removeAll();
-		chef.removeAll();
-		runner.removeAll();
 	}
 	
 	public void addToWaiting(String order, int custNumber){
@@ -97,16 +104,16 @@ public class GameBoard extends JPanel {
 		JLabel addingSomething = new JLabel(custNumber + " " + order, JLabel.LEFT);
 		addingSomething.setPreferredSize(new Dimension(190,20));
 		addingSomething.setForeground(Color.BLACK);
-		pantry.add(addingSomething);
-		pantry.revalidate();
+		chef.add(addingSomething);
+		chef.revalidate();
 	}
 	
 	public void addDoneOrder(String order, int custNumber){
 		JLabel addingSomething = new JLabel(custNumber + " " + order, JLabel.LEFT);
 		addingSomething.setPreferredSize(new Dimension(190,20));
 		addingSomething.setForeground(Color.BLACK);
-		pantry.add(addingSomething);
-		pantry.revalidate();
+		runner.add(addingSomething);
+		runner.revalidate();
 	}
 	
 	public void addPantry(String name, int quantity){

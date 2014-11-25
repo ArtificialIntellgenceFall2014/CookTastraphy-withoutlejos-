@@ -234,16 +234,37 @@ public class Start {
 		Customer[] waitingCustomers = rest.getWaitingCustomers();
 		for(int i = 0; i < waitingCustomers.length; i++)
 		{
+			
 			if(waitingCustomers[i] != null)
 			{
 				board.addToWaiting(waitingCustomers[i].expectedItem.orderedItem.name, waitingCustomers[i].customerID);
 			}
 		}
+		
+		
 		Ingredient[] pantry = rest.getPantry();
 		for(int i = 0; i < pantry.length; i++)
 		{
 			if(pantry[i] != null){
 				board.addPantry(pantry[i].ingredientName, pantry[i].amount);
+			}
+		}
+		
+		OrderedItem[] chefCooking = rest.getInProgress();
+		for(int i = 0; i < chefCooking.length; i++)
+		{
+			if(chefCooking[i] != null)
+			{
+				board.addProcessingOrder(chefCooking[i].orderedItem.name, chefCooking[i].customerID);
+			}
+		}
+		
+		OrderedItem[] forRunner = rest.getCompleteOrders();
+		for(int i = 0; i < forRunner.length; i++)
+		{
+			if(forRunner[i] != null)
+			{
+				board.addDoneOrder(forRunner[i].orderedItem.name, forRunner[i].customerID);
 			}
 		}
 	}
