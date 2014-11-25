@@ -12,6 +12,7 @@ public class GameBoard extends JPanel {
 	public JPanel right = new JPanel(new FlowLayout());
 	public JPanel runner = new JPanel(new FlowLayout());
 	public JPanel chef = new JPanel(new FlowLayout());
+	public JPanel orderHistoryPanel = new JPanel(new FlowLayout());
 	
 	public GameBoard(){
 		JPanel p = new JPanel(new BorderLayout());
@@ -44,7 +45,6 @@ public class GameBoard extends JPanel {
 		pantryHeader.setForeground(Color.YELLOW);
 		right.add(pantryHeader);
 		right.add(pantry);
-		p.add(right, BorderLayout.LINE_END);
 		
 		JPanel chefRunner = new JPanel(new FlowLayout());
 		chef.setPreferredSize(new Dimension(200, 300));
@@ -60,8 +60,15 @@ public class GameBoard extends JPanel {
 		runnerHeader.setForeground(Color.black);
 		chefRunner.add(runnerHeader);
 		chefRunner.add(runner);
-		
 		p.add(chefRunner, BorderLayout.CENTER);
+		
+		orderHistoryPanel.setPreferredSize(new Dimension(200, 200));
+		orderHistoryPanel.setBackground(Color.black);
+		JLabel orderHistLabel = new JLabel("All Past Orders: ", JLabel.CENTER);
+		orderHistLabel.setForeground(Color.YELLOW);
+		right.add(orderHistLabel);
+		right.add(orderHistoryPanel);
+		p.add(right, BorderLayout.LINE_END);
 		
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.add(p);
@@ -90,6 +97,7 @@ public class GameBoard extends JPanel {
 		addingSomething.setForeground(Color.WHITE);
 		orders.add(addingSomething);
 		orders.revalidate();
+		order.repaint();
 	}
 	
 	public void addToWaiting(String order, int custNumber){
@@ -98,6 +106,7 @@ public class GameBoard extends JPanel {
 		addingSomething.setForeground(Color.WHITE);
 		waitingOrders.add(addingSomething);
 		waitingOrders.revalidate();
+		waitingOrders.repaint();
 	}
 	
 	public void addProcessingOrder(String order, int custNumber){
@@ -106,6 +115,7 @@ public class GameBoard extends JPanel {
 		addingSomething.setForeground(Color.BLACK);
 		chef.add(addingSomething);
 		chef.revalidate();
+		chef.repaint();
 	}
 	
 	public void addDoneOrder(String order, int custNumber){
@@ -114,6 +124,7 @@ public class GameBoard extends JPanel {
 		addingSomething.setForeground(Color.BLACK);
 		runner.add(addingSomething);
 		runner.revalidate();
+		runner.repaint();
 	}
 	
 	public void addPantry(String name, int quantity){
@@ -122,6 +133,16 @@ public class GameBoard extends JPanel {
 		addingSomething.setForeground(Color.WHITE);
 		pantry.add(addingSomething);
 		pantry.revalidate();
+		pantry.repaint();
+	}
+	
+	public void addToOrderHistory(String theOrder){
+		JLabel addingSomething = new JLabel(theOrder + "; ");
+		addingSomething.setPreferredSize(new Dimension(190,20));
+		addingSomething.setForeground(Color.WHITE);
+		orderHistoryPanel.add(addingSomething);
+		orderHistoryPanel.revalidate();
+		orderHistoryPanel.repaint();
 	}
 
 }
