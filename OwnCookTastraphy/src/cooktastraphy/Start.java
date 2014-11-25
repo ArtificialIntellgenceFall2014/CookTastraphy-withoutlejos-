@@ -259,7 +259,7 @@ public class Start {
 		{
 			if(chefCooking[i] != null)
 			{
-				board.addProcessingOrder(chefCooking[i].orderedItem.name, chefCooking[i].customerID);
+				board.addProcessingOrder(chefCooking[i].orderedItem.name, chefCooking[i].customerID, ((chefCooking[i].timeReady - System.currentTimeMillis()))/1000);
 			}
 		}
 		

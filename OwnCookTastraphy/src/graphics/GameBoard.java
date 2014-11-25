@@ -91,23 +91,27 @@ public class GameBoard extends JPanel {
 		
 		JPanel chefRunner = new JPanel(new FlowLayout());
 		chefRunner.setBackground(Color.cyan);
-		chef.setPreferredSize(new Dimension(300, 300));
+		chef.setPreferredSize(new Dimension(350, 300));
 		chef.setBackground(Color.cyan);
 		JLabel chefHeader = new JLabel("The Chef is Cooking: ", JLabel.CENTER);
 		chefHeader.setForeground(Color.black);
-		chefHeader.setPreferredSize(new Dimension(300, 20));
+		chefHeader.setPreferredSize(new Dimension(350, 20));
 		
 		JPanel chefColHead = new JPanel(new FlowLayout());
 		JLabel orderNumber2 = new JLabel("Order Number", JLabel.LEFT);
-		orderNumber2.setPreferredSize(new Dimension (100, 20));
+		orderNumber2.setPreferredSize(new Dimension (90, 20));
 		JLabel itemOrdered2 = new JLabel("Item Ordered", JLabel.LEFT);
-		itemOrdered2.setPreferredSize(new Dimension (100, 20));
+		itemOrdered2.setPreferredSize(new Dimension (90, 20));
+		JLabel timer = new JLabel("Cooking Time", JLabel.LEFT);
+		timer.setPreferredSize(new Dimension (90, 20));
 		orderNumber2.setForeground(Color.black);
 		itemOrdered2.setForeground(Color.black);
+		timer.setForeground(Color.black);
 		chefColHead.setBackground(Color.cyan);
-		chefColHead.setPreferredSize(new Dimension (300, 20));
+		chefColHead.setPreferredSize(new Dimension (350, 20));
 		chefColHead.add(orderNumber2);
 		chefColHead.add(itemOrdered2);
+		chefColHead.add(timer);
 		
 		chefRunner.add(chefHeader);
 		chefRunner.add(chefColHead);
@@ -216,22 +220,27 @@ public class GameBoard extends JPanel {
 		waitingOrders.repaint();
 	}
 	
-	public void addProcessingOrder(String order, int custNumber){
+	public void addProcessingOrder(String order, int custNumber, long l){
 		JPanel somePanel = new JPanel(new FlowLayout());
 		
 		JLabel addingOrderNumber = new JLabel(String.valueOf(custNumber), JLabel.LEFT);
 		JLabel addingOrderedItem = new JLabel(order, JLabel.LEFT);
+		JLabel timer = new JLabel(String.valueOf(l), JLabel.LEFT);
 		
-		addingOrderNumber.setPreferredSize(new Dimension(95, 20));
-		addingOrderedItem.setPreferredSize(new Dimension(95, 20));
+		addingOrderNumber.setPreferredSize(new Dimension(90, 20));
+		addingOrderedItem.setPreferredSize(new Dimension(90, 20));
+		timer.setPreferredSize(new Dimension(90, 20));
 		
 		addingOrderNumber.setForeground(Color.black);
 		addingOrderedItem.setForeground(Color.black);
+		timer.setForeground(Color.black);
 		
-		somePanel.setPreferredSize(new Dimension (200, 20));
+		somePanel.setPreferredSize(new Dimension (350, 20));
 		somePanel.setBackground(Color.cyan);
 		somePanel.add(addingOrderNumber);
 		somePanel.add(addingOrderedItem);
+		somePanel.add(timer);
+		
 		chef.add(somePanel);
 		chef.revalidate();
 		chef.repaint();
@@ -259,7 +268,7 @@ public class GameBoard extends JPanel {
 	}
 	
 	public void addPantry(String name, int quantity){
-JPanel somePanel = new JPanel(new FlowLayout());
+		JPanel somePanel = new JPanel(new FlowLayout());
 		
 		JLabel addingOrderNumber = new JLabel(name, JLabel.LEFT);
 		JLabel addingOrderedItem = new JLabel(String.valueOf(quantity), JLabel.LEFT);
