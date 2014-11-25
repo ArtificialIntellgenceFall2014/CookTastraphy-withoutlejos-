@@ -20,6 +20,7 @@ public class Restaurant extends Thread{
 	int tables;
 	FoodItem[] menuBillboard;
 	private Customer[] seatedCustomers;
+	public ArrayList<OrderedItem> completedItems;
 	//Complete orders will be taken out
 	Kitchen mainKitchen;
 	
@@ -30,6 +31,7 @@ public class Restaurant extends Thread{
 		cg = new CustomerGenerator(maxWait, menuBillboard);
 		seatedCustomers = new Customer[tables];
 		mainKitchen = new Kitchen(4, menuBillboard, chefStrat, supStrat);
+		completedItems = new ArrayList<OrderedItem>();
 	}
 	
 	public void run()
@@ -82,7 +84,7 @@ public class Restaurant extends Thread{
 			if(mainKitchen.gusteau.CompleteOrders.get(0).customerID == seatedCustomers[i].customerID)
 			{
 				seatedCustomers[i] = null;
-				mainKitchen.gusteau.CompleteOrders.remove(0);
+				completedItems.add(mainKitchen.gusteau.CompleteOrders.remove(0));
 				return i;
 			}
 		}
@@ -178,6 +180,13 @@ public class Restaurant extends Thread{
 	public Ingredient[] getOrderedIngredients()
 	{
 		return mainKitchen.getOrderedIngredients();
+	}
+	
+	public OrderedItem[] getCompletedItems()
+	{
+		OrderedItem[] ret = new OrderedItem[1];
+		ret = completedItems.toArray(ret);
+		return ret;
 	}
 	
 	public void closeProgram()

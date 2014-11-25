@@ -12,6 +12,9 @@ public class GameBoard extends JPanel {
 	public JPanel right = new JPanel(new FlowLayout());
 	public JPanel runner = new JPanel(new FlowLayout());
 	public JPanel chef = new JPanel(new FlowLayout());
+	//There is now a function in restaurant that returns all completed ordered items
+	//rest.getCompletedItems(); //Extremely lazy naming but w/e w/e
+	//Returns OrderedItem[]
 	public JPanel orderHistoryPanel = new JPanel(new FlowLayout());
 	
 	public GameBoard(){
